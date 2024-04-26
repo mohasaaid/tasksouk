@@ -1,0 +1,14 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "tasksouk",
+    "password": "tasksouk",
+    "database": "TaskServiceDB",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+    "src/models/**/*.js"
+    ]
+  }
+  
