@@ -8,9 +8,11 @@ createConnection().then(connection => {
     // Assuming you might have routes defined elsewhere
     const categoryRoutes = require('./routes/categoryRoutes');
     const freelancerRoutes = require('./routes/freelancerRoutes');
+    const serviceOfferRoutes = require('./routes/serviceOfferRoutes');
 
     app.use('/categories', categoryRoutes);
     app.use('/freelancers', freelancerRoutes);
+    app.use('/serviceoffers', serviceOfferRoutes);
 
     app.listen(3000, () => console.log('Server running on port 3000'));
 }).catch(error => console.error('Error connecting to the database', error));

@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const freelancerRepository = getRepository(Freelancer);
     try {
-      const freelancer = await freelancerRepository.findOne({ where: { id: parseInt(req.params.id) } });
+      const freelancer = await freelancerRepository.findOne({relations: ["reviews"] , where: { id: parseInt(req.params.id) } });
 
       if (freelancer) {
         res.json(freelancer);

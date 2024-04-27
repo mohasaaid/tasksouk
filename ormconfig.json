@@ -6,6 +6,7 @@
     "password": "tasksouk",
     "database": "TaskServiceDB",
     "synchronize": true,
+    "migrationsRun": true,
     "logging": false,
     "entities": [
     "src/models/**/*.js"

@@ -1,55 +1,48 @@
+
 const { EntitySchema } = require("typeorm");
 
-// FreelancerProfile (extends User)
+// CustomerProfile (extends User)
 module.exports = new EntitySchema({
-    name: "FreelancerProfile",
-    tableName: "freelancer_profiles",
+    name: "CustomerProfile",
+    tableName: "customer_profiles",
     columns: {
         userId: {
             primary: true,
             type: "int",
             unique: true
         },
-        skills: {
-            type: "simple-array",
-            nullable: true
-        },
-        bio: {
+        preferences: {
             type: "text",
             nullable: true
         },
-        portfolioUrls: {
-            type: "simple-array",
-            nullable: true
-        },
-        availabilitySchedule: {
+        transactionHistory: {
             type: "json",
             nullable: true
         },
-        serviceArea: {
+        paymentMethod: {
             type: "varchar",
             nullable: true
         },
-        certifications: {
+        savedAddresses: {
             type: "simple-array",
             nullable: true
         },
-        hourlyRate: {
-            type: "decimal",
-            precision: 10,
-            scale: 2,
+        notificationPreferences: {
+            type: "json",
             nullable: true
         },
-        languages: {
-            type: "simple-array",
-            nullable: true
-        },
-        insurance: {
+        marketingPreferences: {
             type: "boolean",
             default: false
         },
-        responseTime: {
-            type: "varchar",
+        profileVisibility: {
+            type: "boolean",
+            default: true
+        },
+        rating: {
+            type: "decimal",
+            precision: 2,
+            scale: 1,
             nullable: true
         }
     },
@@ -57,16 +50,13 @@ module.exports = new EntitySchema({
         user: {
             target: "User",
             type: "one-to-one",
-            inverseSide: "freelancerProfile",
+            inverseSide: "customerProfile",
             joinColumn: {
                 name: "userId",
                 referencedColumnName: "id"
             }
-        },
-        reviews: {
-            target: "Review",
-            type: "one-to-many",
-            mappedBy: "freelancerId" 
         }
     }
 });
+
+
