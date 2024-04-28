@@ -26,7 +26,7 @@ module.exports = new EntitySchema({
             precision: 2,
             scale: 1,
             nullable: false
-        },     
+        },
         comment: {
             type: "text",
             nullable: true
@@ -45,23 +45,13 @@ module.exports = new EntitySchema({
                 referencedColumnName: "id"
             }
         },
-        user: {
-            target: "User",
-            type: "many-to-one",
-            joinColumn: {
-                name: "userId",
-                referencedColumnName: "id"
-            },
-            nullable: true
-        },
-        freelancerProfile: {
+        freelancer: {
             target: "FreelancerProfile",
             type: "many-to-one",
             joinColumn: {
                 name: "freelancerId",
                 referencedColumnName: "userId"
-            },
-            nullable: true
+            }
         }
     }
 });

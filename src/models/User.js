@@ -23,9 +23,9 @@ module.exports = new EntitySchema({
             type: "date",  // Adding the birthdate field
             nullable: true  // Set to true if birthdate is not mandatory for all users
         },
-        role: {
-            type: "varchar",  // 'freelancer' or 'customer'
-            nullable: false
+        roles: {
+            type: "simple-array",
+            nullable: false  // Assuming every user must have at least one role
         }
     }
 });

@@ -1,22 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const { getRepository } = require('typeorm');
-const Freelancer = require('../models/Freelancer');
+const FreelancerProfile = require('../models/Freelancer');
 
 
 // GET: Retrieve all freelancers
 router.get('/', async (req, res) => {
-    const freelancerRepository = getRepository(Freelancer);
+    const freelancerRepository = getRepository(FreelancerProfile);
     const freelancers = await freelancerRepository.find();
     res.json(freelancers);
   });
 
 // GET: Retrieve a single freelancer by ID
 router.get('/:id', async (req, res) => {
-    const freelancerRepository = getRepository(Freelancer);
+    const freelancerRepository = getRepository(FreelancerProfile);
     try {
-      const freelancer = await freelancerRepository.findOne({relations: ["reviews"] , where: { id: parseInt(req.params.id) } });
-
+      const freelancer = await freelancerRepository.findOne({
+        where: { userId: parseInt(req.params.id) },
+        relations: ["reviews", "reviews.reviewer"] 
+    });
       if (freelancer) {
         res.json(freelancer);
       } else {
@@ -29,7 +31,7 @@ router.get('/:id', async (req, res) => {
   
 // POST: Create a new freelancer
 router.post('/', async (req, res) => {
-  const freelancerRepository = getRepository(Freelancer);
+  const freelancerRepository = getRepository(FreelancerProfile);
   const freelancer = freelancerRepository.create(req.body);
   try {
     const result = await freelancerRepository.save(freelancer);
@@ -41,7 +43,7 @@ router.post('/', async (req, res) => {
 
 // PUT: Update an existing freelancer
 router.put('/:id', async (req, res) => {
-    const freelancerRepository = getRepository(Freelancer);
+    const freelancerRepository = getRepository(FreelancerProfile);
     try {
       const freelancer = await freelancerRepository.findOne({ where: { id: parseInt(req.params.id) } });
       if (freelancer) {
@@ -58,7 +60,7 @@ router.put('/:id', async (req, res) => {
   
 // DELETE: Delete a freelancer
 router.delete('/:id', async (req, res) => {
-  const freelancerRepository = getRepository(Freelancer);
+  const freelancerRepository = getRepository(FreelancerProfile);
   try {
     const result = await freelancerRepository.delete(req.params.id);
     if (result.affected === 0) {
@@ -70,5 +72,27 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
+
+router.get('/:id/service-requests', async (req, res) => {
+  const freelancerRepository = getRepository(FreelancerProfile);
+  try {
+      const freelancer = await freelancerRepository.findOne({
+          where: { userId: parseInt(req.params.id) },
+          relations: ["serviceOffers", "serviceOffers.serviceRequests"] // Include nested relations
+      });      
+      if (freelancer) {
+          // Extract service requests from service offers
+          const serviceRequests = freelancer.serviceOffers.flatMap(offer => offer.serviceRequests);
+          res.json(serviceRequests);
+      } else {
+          res.status(404).send('Freelancer not found');
+      }
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
 
 module.exports = router;

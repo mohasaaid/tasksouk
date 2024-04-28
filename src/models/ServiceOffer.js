@@ -56,5 +56,14 @@ module.exports = new EntitySchema({
                 referencedColumnName: "id"
             }
         },
+        serviceRequests: {  // New relation added here
+            target: "ServiceRequest",
+            type: "one-to-many",
+            inverseSide: "serviceOffer",
+            joinColumn: {
+                name: "id",
+                referencedColumnName: "serviceOfferId"
+            }
+        }
     }
 });

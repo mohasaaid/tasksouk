@@ -37,7 +37,6 @@ router.post('/', async (req, res) => {
 // PUT update an existing category
 router.put('/:id', async (req, res) => {
     const categoryRepository = getRepository(Category);
-    // const category = await categoryRepository.findOne({ where: { id: parseInt(req.params.id) } });
     const category = await categoryRepository.findOne({
         where: { id: parseInt(req.params.id) }
     });

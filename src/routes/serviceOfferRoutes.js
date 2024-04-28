@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const serviceOfferRepository = getRepository(ServiceOffer);
     try {
-        const serviceOffer = await serviceOfferRepository.findOne(req.params.id, { relations: ["freelancer", "category"] });
+        const serviceOffer = await serviceOfferRepository.findOne({ where: { id: parseInt(req.params.id) },relations: ["freelancer", "category"] });
         if (serviceOffer) {
             res.json(serviceOffer);
         } else {

@@ -5,8 +5,8 @@
     "username": "tasksouk",
     "password": "tasksouk",
     "database": "TaskServiceDB",
+    "schema": "tasks",
     "synchronize": true,
-    "migrationsRun": true,
     "logging": false,
     "entities": [
     "src/models/**/*.js"

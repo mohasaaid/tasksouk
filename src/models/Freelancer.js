@@ -1,6 +1,5 @@
 const { EntitySchema } = require("typeorm");
 
-// FreelancerProfile (extends User)
 module.exports = new EntitySchema({
     name: "FreelancerProfile",
     tableName: "freelancer_profiles",
@@ -66,7 +65,20 @@ module.exports = new EntitySchema({
         reviews: {
             target: "Review",
             type: "one-to-many",
-            mappedBy: "freelancerId" 
+            inverseSide: "freelancer",
+            joinColumn: {
+                name: "freelancerId",
+                referencedColumnName: "userId"
+            }
+        },
+        serviceOffers: { 
+            target: "ServiceOffer",
+            type: "one-to-many",
+            inverseSide: "freelancer",
+            joinColumn: {
+                name: "freelancerId",
+                referencedColumnName: "userId"
+            }
         }
     }
 });
